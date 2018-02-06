@@ -8,7 +8,7 @@ import fr.acinq.bitcoin.{BinaryData, Crypto, DeterministicWallet, MilliSatoshi, 
 import fr.acinq.eclair._
 import fr.acinq.eclair.blockchain.EclairWallet
 import fr.acinq.eclair.channel._
-import fr.acinq.eclair.crypto.KeyManager
+import fr.acinq.eclair.crypto.LocalKeyManager
 import fr.acinq.eclair.crypto.TransportHandler.Listener
 import fr.acinq.eclair.router.{Rebroadcast, SendRoutingState}
 import fr.acinq.eclair.wire
