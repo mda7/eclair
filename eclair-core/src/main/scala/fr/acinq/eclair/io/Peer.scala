@@ -19,7 +19,7 @@ import scala.util.Random
 /**
   * Created by PM on 26/08/2016.
   */
-class Peer(nodeParams: NodeParams, remoteNodeId: PublicKey, previousKnownAddress: Option[InetSocketAddress], authenticator: ActorRef, watcher: ActorRef, router: ActorRef, relayer: ActorRef, wallet: EclairWallet, storedChannels: Set[HasCommitments], keyManager: KeyManager) extends LoggingFSM[Peer.State, Peer.Data] {
+class Peer(nodeParams: NodeParams, remoteNodeId: PublicKey, previousKnownAddress: Option[InetSocketAddress], authenticator: ActorRef, watcher: ActorRef, router: ActorRef, relayer: ActorRef, wallet: EclairWallet, storedChannels: Set[HasCommitments]) extends LoggingFSM[Peer.State, Peer.Data] {
 
   import Peer._
 
@@ -251,7 +251,7 @@ class Peer(nodeParams: NodeParams, remoteNodeId: PublicKey, previousKnownAddress
   }
 
   def spawnChannel(nodeParams: NodeParams, transport: ActorRef): ActorRef = {
-    val channel = context.actorOf(Channel.props(nodeParams, wallet, remoteNodeId, watcher, router, relayer, keyManager))
+    val channel = context.actorOf(Channel.props(nodeParams, wallet, remoteNodeId, watcher, router, relayer))
     context watch channel
     channel
   }
@@ -271,7 +271,7 @@ object Peer {
 
   val RECONNECT_TIMER = "reconnect"
 
-  def props(nodeParams: NodeParams, remoteNodeId: PublicKey, previousKnownAddress: Option[InetSocketAddress], authenticator: ActorRef, watcher: ActorRef, router: ActorRef, relayer: ActorRef, wallet: EclairWallet, storedChannels: Set[HasCommitments], keyManager: KeyManager) = Props(new Peer(nodeParams, remoteNodeId, previousKnownAddress, authenticator, watcher, router, relayer, wallet: EclairWallet, storedChannels, keyManager))
+  def props(nodeParams: NodeParams, remoteNodeId: PublicKey, previousKnownAddress: Option[InetSocketAddress], authenticator: ActorRef, watcher: ActorRef, router: ActorRef, relayer: ActorRef, wallet: EclairWallet, storedChannels: Set[HasCommitments]) = Props(new Peer(nodeParams, remoteNodeId, previousKnownAddress, authenticator, watcher, router, relayer, wallet: EclairWallet, storedChannels))
 
   // @formatter:off
 
